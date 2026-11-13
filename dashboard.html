@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manufacturing Quality Inspection System</title>
+<link rel="stylesheet" href="dash.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">QUALITY INSPECT</div>
+    <nav class="nav">
+      <a href="#dashboard" data-view="dashboard">Dashboard</a>
+      <a href="#inspection" data-view="inspection">Inspection</a>
+      <a href="#reports" data-view="reports">Reports</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <p id="pageSub">Monitor production quality and inspection results</p>
+      </div>
+      <a class="btn" href="#inspection">+ New Inspection</a>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section class="view" id="view-dashboard">
+      <div class="cards">
+        <div class="card"><p>Total Inspected</p><h2 id="total">0</h2></div>
+        <div class="card"><p>Passed</p><h2 id="passed" class="pass">0</h2></div>
+        <div class="card"><p>Failed</p><h2 id="failed" class="fail">0</h2></div>
+        <div class="card"><p>Pending</p><h2 id="pending" class="pend">0</h2></div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <h3>Pass Rate</h3>
+          <div class="rate"><b id="rate">0%</b><span class="muted">of completed inspections</span></div>
+          <div class="bar big"><i id="rateBar"></i></div>
+        </div>
+        <div class="panel">
+          <h3>Defects by Type</h3>
+          <ul class="defects" id="defectList"></ul>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Recent Inspections</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Product</th><th>Inspector</th><th>Defect</th><th>Result</th><th>Date</th></tr></thead>
+          <tbody id="recentBody"></tbody>
+        </table></div>
+      </div>
+    </section>
+
+    <!-- NEW INSPECTION -->
+    <section class="view" id="view-inspection" hidden>
+      <form class="panel form" id="inspectionForm" novalidate>
+        <div class="row2">
+          <div class="field"><label for="productId">Product ID</label><input type="text" id="productId" placeholder="e.g. P-1001"></div>
+          <div class="field"><label for="productName">Product Name</label><input type="text" id="productName" placeholder="Enter Product Name"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="inspectorName">Inspector Name</label><input type="text" id="inspectorName" placeholder="Enter Inspector Name"></div>
+          <div class="field"><label for="defect">Defect Type</label>
+            <select id="defect">
+              <option value="None">No Defect</option><option value="Crack">Crack</option>
+              <option value="Scratch">Scratch</option><option value="Dimension Error">Dimension Error</option>
+              <option value="Other">Other</option>
+            </select></div>
+        </div>
+        <div class="field">
+          <label>Inspection Result</label>
+          <div class="radio-options">
+            <label><input type="radio" name="result" value="Pass"> Pass</label>
+            <label><input type="radio" name="result" value="Fail"> Fail</label>
+            <label><input type="radio" name="result" value="Pending" checked> Pending</label>
+          </div>
+        </div>
+        <div class="field"><label for="comments">Additional Comments</label><textarea id="comments" placeholder="Enter inspection comments"></textarea></div>
+        <div class="actions">
+          <button type="submit" class="btn">Submit Inspection</button>
+          <button type="reset" class="btn ghost" id="resetBtn">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="view" id="view-reports" hidden>
+      <div class="panel">
+        <div class="toolbar">
+          <input type="search" id="search" placeholder="Search product, ID, inspector, defect...">
+          <select id="filter"><option value="All">All results</option><option>Pass</option><option>Fail</option><option>Pending</option></select>
+          <button class="btn ghost" id="exportBtn" type="button">Export CSV</button>
+          <button class="btn danger" id="clearBtn" type="button">Clear All</button>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Product</th><th>Inspector</th><th>Defect</th><th>Result</th><th>Comments</th><th>Date</th><th></th></tr></thead>
+          <tbody id="reportBody"></tbody>
+        </table></div>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>
